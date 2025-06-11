@@ -1095,11 +1095,10 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
 	if (id < 0)
 		id = first_dynamic_gpiochip_num;
 
-	gdev->id = ida_alloc_range(&gpio_ida, id, ~0, GFP_KERNEL);
-	if (gdev->id < 0) {
-		ret = gdev->id;
+	ret = ida_alloc_range(&gpio_ida, id, ~0, GFP_KERNEL);
+	if (ret < 0)
 		goto err_free_gdev;
-	}
+	gdev->id = ret;
 
 	ret = dev_set_name(&gdev->dev, GPIOCHIP_NAME "%d", gdev->id);
 	if (ret)
