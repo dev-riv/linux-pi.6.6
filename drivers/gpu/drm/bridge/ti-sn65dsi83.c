@@ -476,11 +476,6 @@ static void sn65dsi83_atomic_pre_enable(struct drm_bridge *bridge,
 	regmap_write(ctx->regmap, REG_IRQ_GLOBAL, 0x1);
 	regmap_write(ctx->regmap, REG_IRQ_EN, 0xff);
 	regmap_write(ctx->regmap, REG_IRQ_STAT, 0x01);
-	unsigned int vall = 0;
-	// reverse lanes Edgar
-	//regmap_read(ctx->regmap, REG_LVDS_LANE, &vall);
-	//printk(KERN_INFO "riverdi %s:%d ************************** 0x1a REG_LVDS_LANE=0x%x\n", __func__, __LINE__, vall);
-	//regmap_write(ctx->regmap, REG_LVDS_LANE, vall | 1<<5);
 	usleep_range(3000, 4000);
 	ret = regmap_read_poll_timeout(ctx->regmap, REG_RC_LVDS_PLL, pval,
 				       pval & REG_RC_LVDS_PLL_PLL_EN_STAT,
