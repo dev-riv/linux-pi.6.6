@@ -482,7 +482,6 @@ static void sn65dsi83_atomic_pre_enable(struct drm_bridge *bridge,
 	//printk(KERN_INFO "riverdi %s:%d ************************** 0x1a REG_LVDS_LANE=0x%x\n", __func__, __LINE__, vall);
 	//regmap_write(ctx->regmap, REG_LVDS_LANE, vall | 1<<5);
 	usleep_range(3000, 4000);
-	usleep_range(1000000, 1200000);
 	ret = regmap_read_poll_timeout(ctx->regmap, REG_RC_LVDS_PLL, pval,
 				       pval & REG_RC_LVDS_PLL_PLL_EN_STAT,
 				       1000, 100000);
@@ -495,41 +494,10 @@ static void sn65dsi83_atomic_pre_enable(struct drm_bridge *bridge,
 
 	/* Trigger reset after CSR register update. */
 	//regmap_write(ctx->regmap, REG_RC_RESET, REG_RC_RESET_SOFT_RESET);
-	////le16val = cpu_to_le16(mode->hdisplay);
-	//le16val = cpu_to_le16(800);
-	//regmap_bulk_write(ctx->regmap, REG_VID_CHA_ACTIVE_LINE_LENGTH_LOW,
-	//		  &le16val, 2);
-	////le16val = cpu_to_le16(mode->vdisplay);
-	//le16val = cpu_to_le16(480);
-	//regmap_bulk_write(ctx->regmap, REG_VID_CHA_VERTICAL_DISPLAY_SIZE_LOW,
-	//		  &le16val, 2);
-	///* 32 + 1 pixel clock to ensure proper operation */
-	//le16val = cpu_to_le16(32 + 1);
-	//regmap_bulk_write(ctx->regmap, REG_VID_CHA_SYNC_DELAY_LOW, &le16val, 2);
-	////le16val = cpu_to_le16(mode->hsync_end - mode->hsync_start);
-	//le16val = cpu_to_le16(0x80);
-	//regmap_bulk_write(ctx->regmap, REG_VID_CHA_HSYNC_PULSE_WIDTH_LOW,
-	//		  &le16val, 2);
-	////le16val = cpu_to_le16(mode->vsync_end - mode->vsync_start);
-	//le16val = cpu_to_le16(2);
-	//regmap_bulk_write(ctx->regmap, REG_VID_CHA_VSYNC_PULSE_WIDTH_LOW,
-	//		  &le16val, 2);
-//	//regmap_write(ctx->regmap, REG_VID_CHA_HORIZONTAL_BACK_PORCH,
-//	//	     mode->htotal - mode->hsync_end);
-	//regmap_write(ctx->regmap, REG_VID_CHA_HORIZONTAL_BACK_PORCH,0x58);
-//	//regmap_write(ctx->regmap, REG_VID_CHA_VERTICAL_BACK_PORCH,
-//	//	     mode->vtotal - mode->vsync_end);
-	//regmap_write(ctx->regmap, REG_VID_CHA_VERTICAL_BACK_PORCH, 0x21);
-//	//regmap_write(ctx->regmap, REG_VID_CHA_HORIZONTAL_FRONT_PORCH,
-//	//	     mode->hsync_start - mode->hdisplay);
-	//regmap_write(ctx->regmap, REG_VID_CHA_HORIZONTAL_FRONT_PORCH,0x28);
-//	//regmap_write(ctx->regmap, REG_VID_CHA_VERTICAL_FRONT_PORCH,
-//	//	     mode->vsync_start - mode->vdisplay);
-	//regmap_write(ctx->regmap, REG_VID_CHA_VERTICAL_FRONT_PORCH, 0x0A);
 	//regmap_write(ctx->regmap, REG_VID_CHA_TEST_PATTERN, 0x10);
 
 	/* Wait for 10ms after soft reset as specified in datasheet */
-	usleep_range(10000000, 12000000);
+	usleep_range(10000, 12000);
 }
 
 static void sn65dsi83_atomic_enable(struct drm_bridge *bridge,
