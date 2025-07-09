@@ -488,8 +488,7 @@ static void sn65dsi83_atomic_pre_enable(struct drm_bridge *bridge,
 	}
 
 	/* Trigger reset after CSR register update. */
-	//regmap_write(ctx->regmap, REG_RC_RESET, REG_RC_RESET_SOFT_RESET);
-	//regmap_write(ctx->regmap, REG_VID_CHA_TEST_PATTERN, 0x10);
+	regmap_write(ctx->regmap, REG_RC_RESET, REG_RC_RESET_SOFT_RESET);
 
 	/* Wait for 10ms after soft reset as specified in datasheet */
 	usleep_range(10000, 12000);
