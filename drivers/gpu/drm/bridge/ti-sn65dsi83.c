@@ -466,11 +466,8 @@ static void sn65dsi83_atomic_pre_enable(struct drm_bridge *bridge,
 		     mode->hsync_start - mode->hdisplay);
 	regmap_write(ctx->regmap, REG_VID_CHA_VERTICAL_FRONT_PORCH,
 		     mode->vsync_start - mode->vdisplay);
-	//ret = regmap_write(ctx->regmap, REG_VID_CHA_TEST_PATTERN, 0x01);
-	//if (ret) {
-	//	dev_warn(ctx->dev, 
-	//		"SN65: FAILED to enable TEST pattern: %d\n", ret);
-	//}
+	regmap_write(ctx->regmap, REG_VID_CHA_TEST_PATTERN, 0x00);
+
 	/* Enable PLL */
 	regmap_write(ctx->regmap, REG_RC_PLL_EN, REG_RC_PLL_EN_PLL_EN);
 	usleep_range(3000, 4000);
