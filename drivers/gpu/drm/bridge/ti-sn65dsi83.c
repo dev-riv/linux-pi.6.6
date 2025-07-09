@@ -133,48 +133,48 @@
 #define  REG_IRQ_STAT_CHA_PLL_UNLOCK		BIT(0)
 
 enum sn65dsi83_model {
-MODEL_SN65DSI83,
-MODEL_SN65DSI84,
+	MODEL_SN65DSI83,
+	MODEL_SN65DSI84,
 };
 
 struct sn65dsi83 {
-struct drm_bridge		bridge;
-struct device			*dev;
-struct regmap			*regmap;
-struct mipi_dsi_device		*dsi;
-struct drm_bridge		*panel_bridge;
-struct gpio_desc		*enable_gpio;
-struct regulator		*vcc;
-bool				lvds_dual_link;
-bool				lvds_dual_link_even_odd_swap;
+	struct drm_bridge		bridge;
+	struct device			*dev;
+	struct regmap			*regmap;
+	struct mipi_dsi_device		*dsi;
+	struct drm_bridge		*panel_bridge;
+	struct gpio_desc		*enable_gpio;
+	struct regulator		*vcc;
+	bool				lvds_dual_link;
+	bool				lvds_dual_link_even_odd_swap;
 };
 
 static const struct regmap_range sn65dsi83_readable_ranges[] = {
-regmap_reg_range(REG_ID(0), REG_ID(8)),
-regmap_reg_range(REG_RC_LVDS_PLL, REG_RC_DSI_CLK),
-regmap_reg_range(REG_RC_PLL_EN, REG_RC_PLL_EN),
-regmap_reg_range(REG_DSI_LANE, REG_DSI_CLK),
-regmap_reg_range(REG_LVDS_FMT, REG_LVDS_CM),
-regmap_reg_range(REG_VID_CHA_ACTIVE_LINE_LENGTH_LOW,
-		 REG_VID_CHA_ACTIVE_LINE_LENGTH_HIGH),
-regmap_reg_range(REG_VID_CHA_VERTICAL_DISPLAY_SIZE_LOW,
-		 REG_VID_CHA_VERTICAL_DISPLAY_SIZE_HIGH),
-regmap_reg_range(REG_VID_CHA_SYNC_DELAY_LOW,
-		 REG_VID_CHA_SYNC_DELAY_HIGH),
-regmap_reg_range(REG_VID_CHA_HSYNC_PULSE_WIDTH_LOW,
-		 REG_VID_CHA_HSYNC_PULSE_WIDTH_HIGH),
-regmap_reg_range(REG_VID_CHA_VSYNC_PULSE_WIDTH_LOW,
-		 REG_VID_CHA_VSYNC_PULSE_WIDTH_HIGH),
-regmap_reg_range(REG_VID_CHA_HORIZONTAL_BACK_PORCH,
-		 REG_VID_CHA_HORIZONTAL_BACK_PORCH),
-regmap_reg_range(REG_VID_CHA_VERTICAL_BACK_PORCH,
-		 REG_VID_CHA_VERTICAL_BACK_PORCH),
-regmap_reg_range(REG_VID_CHA_HORIZONTAL_FRONT_PORCH,
-		 REG_VID_CHA_HORIZONTAL_FRONT_PORCH),
-regmap_reg_range(REG_VID_CHA_VERTICAL_FRONT_PORCH,
-		 REG_VID_CHA_VERTICAL_FRONT_PORCH),
-regmap_reg_range(REG_VID_CHA_TEST_PATTERN, REG_VID_CHA_TEST_PATTERN),
-regmap_reg_range(REG_IRQ_GLOBAL, REG_IRQ_EN),
+	regmap_reg_range(REG_ID(0), REG_ID(8)),
+	regmap_reg_range(REG_RC_LVDS_PLL, REG_RC_DSI_CLK),
+	regmap_reg_range(REG_RC_PLL_EN, REG_RC_PLL_EN),
+	regmap_reg_range(REG_DSI_LANE, REG_DSI_CLK),
+	regmap_reg_range(REG_LVDS_FMT, REG_LVDS_CM),
+	regmap_reg_range(REG_VID_CHA_ACTIVE_LINE_LENGTH_LOW,
+			 REG_VID_CHA_ACTIVE_LINE_LENGTH_HIGH),
+	regmap_reg_range(REG_VID_CHA_VERTICAL_DISPLAY_SIZE_LOW,
+			 REG_VID_CHA_VERTICAL_DISPLAY_SIZE_HIGH),
+	regmap_reg_range(REG_VID_CHA_SYNC_DELAY_LOW,
+			 REG_VID_CHA_SYNC_DELAY_HIGH),
+	regmap_reg_range(REG_VID_CHA_HSYNC_PULSE_WIDTH_LOW,
+			 REG_VID_CHA_HSYNC_PULSE_WIDTH_HIGH),
+	regmap_reg_range(REG_VID_CHA_VSYNC_PULSE_WIDTH_LOW,
+			 REG_VID_CHA_VSYNC_PULSE_WIDTH_HIGH),
+	regmap_reg_range(REG_VID_CHA_HORIZONTAL_BACK_PORCH,
+			 REG_VID_CHA_HORIZONTAL_BACK_PORCH),
+	regmap_reg_range(REG_VID_CHA_VERTICAL_BACK_PORCH,
+			 REG_VID_CHA_VERTICAL_BACK_PORCH),
+	regmap_reg_range(REG_VID_CHA_HORIZONTAL_FRONT_PORCH,
+			 REG_VID_CHA_HORIZONTAL_FRONT_PORCH),
+	regmap_reg_range(REG_VID_CHA_VERTICAL_FRONT_PORCH,
+			 REG_VID_CHA_VERTICAL_FRONT_PORCH),
+	regmap_reg_range(REG_VID_CHA_TEST_PATTERN, REG_VID_CHA_TEST_PATTERN),
+	regmap_reg_range(REG_IRQ_GLOBAL, REG_IRQ_EN),
 	regmap_reg_range(REG_IRQ_STAT, REG_IRQ_STAT),
 };
 
@@ -246,7 +246,6 @@ static int sn65dsi83_attach(struct drm_bridge *bridge,
 			    enum drm_bridge_attach_flags flags)
 {
 	struct sn65dsi83 *ctx = bridge_to_sn65dsi83(bridge);
-	printk(KERN_INFO "riverdi ---------------%s:%d\n", __func__, __LINE__);
 
 	return drm_bridge_attach(bridge->encoder, ctx->panel_bridge,
 				 &ctx->bridge, flags);
@@ -256,7 +255,6 @@ static void sn65dsi83_detach(struct drm_bridge *bridge)
 {
 	struct sn65dsi83 *ctx = bridge_to_sn65dsi83(bridge);
 
-	printk(KERN_INFO "riverdi ---------------%s:%d\n", __func__, __LINE__);
 	if (!ctx->dsi)
 		return;
 
@@ -281,7 +279,6 @@ static u8 sn65dsi83_get_lvds_range(struct sn65dsi83 *ctx,
 	 * as follows:
 	 */
 	int mode_clock = mode->clock;
-	printk(KERN_INFO "riverdi ---------------%s:%d\n", __func__, __LINE__);
 
 	if (ctx->lvds_dual_link)
 		mode_clock /= 2;
@@ -612,16 +609,13 @@ static void sn65dsi83_atomic_enable(struct drm_bridge *bridge,
 
 	/* Clear all errors that got asserted during initialization. */
 	regmap_read(ctx->regmap, REG_IRQ_STAT, &pval);
-	printk(KERN_INFO "riverdi ---------------%s:%d ipval=%d\n", __func__, __LINE__, pval);
 	regmap_write(ctx->regmap, REG_IRQ_STAT, pval);
 
 	/* Wait for 1ms and check for errors in status register */
 	usleep_range(1000, 1100);
 	regmap_read(ctx->regmap, REG_IRQ_STAT, &pval);
-	printk(KERN_INFO "riverdi %s:%d ************************** 0xe5 REG_IRQ_STAT=0x%x\n", __func__, __LINE__, pval);
 	if (pval)
 		dev_err(ctx->dev, "Unexpected link status 0x%02x\n", pval);
-	//regmap_write(ctx->regmap, REG_VID_CHA_TEST_PATTERN, 0x10);
 }
 
 static void sn65dsi83_atomic_disable(struct drm_bridge *bridge,
@@ -630,7 +624,6 @@ static void sn65dsi83_atomic_disable(struct drm_bridge *bridge,
 	struct sn65dsi83 *ctx = bridge_to_sn65dsi83(bridge);
 	int ret;
 
-	printk(KERN_INFO "riverdi ---------------%s:%d\n", __func__, __LINE__);
 	/* Put the chip in reset, pull EN line low, and assure 10ms reset low timing. */
 	gpiod_set_value_cansleep(ctx->enable_gpio, 0);
 	usleep_range(10000, 11000);
@@ -733,21 +726,16 @@ static int sn65dsi83_parse_dt(struct sn65dsi83 *ctx, enum sn65dsi83_model model)
 		}
 	}
 
-	printk(KERN_INFO "riverdi %s:%d of_node=%s\n", __func__, __LINE__, dev->of_node ? dev->of_node->full_name:"NULL");
 	panel_bridge = devm_drm_of_get_bridge(dev, dev->of_node, 2, 0);
-	if (IS_ERR(panel_bridge)) {
-	printk(KERN_INFO "riverdi %s:%d\n", __func__, __LINE__);
+	if (IS_ERR(panel_bridge))
 		return PTR_ERR(panel_bridge);
-	}
 
 	ctx->panel_bridge = panel_bridge;
 
 	ctx->vcc = devm_regulator_get(dev, "vcc");
-	if (IS_ERR(ctx->vcc)) {
-	printk(KERN_INFO "riverdi %s:%d\n", __func__, __LINE__);
+	if (IS_ERR(ctx->vcc))
 		return dev_err_probe(dev, PTR_ERR(ctx->vcc),
 				     "Failed to get supply 'vcc'\n");
-	}
 
 	return 0;
 }
@@ -784,7 +772,6 @@ static int sn65dsi83_host_attach(struct sn65dsi83 *ctx)
 		return dev_err_probe(dev, PTR_ERR(dsi),
 				     "failed to create dsi device\n");
 
-	printk(KERN_INFO "riverdi %s:%d\n", __func__, __LINE__);
 	ctx->dsi = dsi;
 
 	dsi->lanes = dsi_lanes;
@@ -811,7 +798,6 @@ static int sn65dsi83_probe(struct i2c_client *client)
 	struct sn65dsi83 *ctx;
 	int ret;
 
-	printk(KERN_INFO "riverdi %s:%d\n", __func__, __LINE__);
 	ctx = devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
 	if (!ctx)
 		return -ENOMEM;
@@ -828,24 +814,18 @@ static int sn65dsi83_probe(struct i2c_client *client)
 	/* Put the chip in reset, pull EN line low, and assure 10ms reset low timing. */
 	ctx->enable_gpio = devm_gpiod_get_optional(ctx->dev, "enable",
 						   GPIOD_OUT_LOW);
-	printk(KERN_INFO "riverdi %s:%d\n", __func__, __LINE__);
 	if (IS_ERR(ctx->enable_gpio))
 		return dev_err_probe(dev, PTR_ERR(ctx->enable_gpio), "failed to get enable GPIO\n");
 
 	usleep_range(10000, 11000);
 
-	printk(KERN_INFO "riverdi %s:%d\n", __func__, __LINE__);
 	ret = sn65dsi83_parse_dt(ctx, model);
-	if (ret) {
-	printk(KERN_INFO "riverdi %s:%d\n", __func__, __LINE__);
+	if (ret)
 		return ret;
-	}
 
-	printk(KERN_INFO "riverdi %s:%d\n", __func__, __LINE__);
 	ctx->regmap = devm_regmap_init_i2c(client, &sn65dsi83_regmap_config);
 	if (IS_ERR(ctx->regmap))
 		return dev_err_probe(dev, PTR_ERR(ctx->regmap), "failed to get regmap\n");
-	printk(KERN_INFO "riverdi %s:%d\n", __func__, __LINE__);
 
 	dev_set_drvdata(dev, ctx);
 	i2c_set_clientdata(client, ctx);
@@ -860,12 +840,10 @@ static int sn65dsi83_probe(struct i2c_client *client)
 		dev_err_probe(dev, ret, "failed to attach DSI host\n");
 		goto err_remove_bridge;
 	}
-	printk(KERN_INFO "riverdi %s:%d\n", __func__, __LINE__);
 
 	return 0;
 
 err_remove_bridge:
-	printk(KERN_INFO "riverdi %s:%d\n", __func__, __LINE__);
 	drm_bridge_remove(&ctx->bridge);
 	return ret;
 }
