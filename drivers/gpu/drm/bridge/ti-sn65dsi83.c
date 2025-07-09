@@ -633,15 +633,6 @@ static void sn65dsi83_atomic_disable(struct drm_bridge *bridge,
 		dev_err(ctx->dev, "Failed to disable vcc: %d\n", ret);
 
 	regcache_mark_dirty(ctx->regmap);
-
-	gpiod_set_value_cansleep(ctx->enable_gpio, 0);
-	usleep_range(10000, 11000);
-
-	ret = regulator_disable(ctx->vcc);
-	if (ret)
-		dev_err(ctx->dev, "Failed to disable vcc: %d\n", ret);
-
-	regcache_mark_dirty(ctx->regmap);
 }
 
 static enum drm_mode_status
