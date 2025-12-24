@@ -657,6 +657,8 @@ static int sn65dsi83_host_attach(struct sn65dsi83 *ctx)
 	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
 			  MIPI_DSI_MODE_VIDEO_NO_HFP | MIPI_DSI_MODE_VIDEO_NO_HBP |
 			  MIPI_DSI_MODE_VIDEO_NO_HSA | MIPI_DSI_MODE_NO_EOT_PACKET;
+	// NOTE: In case of Raspberry pi5 default dsi display value of mode flags is 0x815
+	//dsi->mode_flags = 0x815; 
 
 	ret = devm_mipi_dsi_attach(dev, dsi);
 	if (ret < 0) {
